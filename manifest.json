@@ -9,7 +9,7 @@
         "default_icon": "images/de bug.png"
     },
 
-    "permissions": ["storage", "tabs", "activeTab", "offscreen"],
+    "permissions": ["storage", "tabs", "activeTab"],
 
     "background": {
         "service_worker": "scripts/service-worker.js"
