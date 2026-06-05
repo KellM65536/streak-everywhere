@@ -1,14 +1,17 @@
 async function updateStreaks(tabId, changeInfo, tab){
-  chrome.storage.session.get(tab.url).then(
+  const tabURL = new URL(tab.url).hostname
+  // const tabURLString = tab.url
+  chrome.storage.session.get(tabURL).then(
     async function(value) {
       newThingy = {}
+
       
-      if(value[tab.url]){
+      if(value[tabURL]){
         // Site visited before
-        newThingy[tab.url] = value[tab.url] + 1
+        newThingy[tabURL] = value[tabURL] + 1
       } else {
         // Completely new site
-        newThingy[tab.url] = 1
+        newThingy[tabURL] = 1
       }
 
       // Update storage
