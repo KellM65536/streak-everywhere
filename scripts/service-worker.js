@@ -1,3 +1,5 @@
+const DAY_IN_MS = 1000 * 10 // 24 * 60 * 60 * 1000
+
 async function updateStreaks(tabId, changeInfo, tab){
   const tabURL = new URL(tab.url).hostname
   const tabLastAccess = tab.lastAccessed
@@ -5,30 +7,38 @@ async function updateStreaks(tabId, changeInfo, tab){
   chrome.storage.session.get(tabURL).then(
     async function(value) {
       newThingy = {}
+      const today = Math.round(Date.now() / DAY_IN_MS)
 
       if(value[tabURL]){
         // Site visited before
-        // console.log("visited")
-        // console.log(tabURL)
-        newThingy[tabURL] = {
-          visits: value[tabURL].visits + 1,
-          lastVisit: tabLastAccess
-        }
+        
+        if(today - value[tabURL].lastVisit >= 1) {
+          // It's been a day since last visit
+                  
+          newThingy[tabURL] = {
+            visits: value[tabURL].visits + 1,
+            lastVisit: today
+          }
 
+          // Update storage
+          await chrome.storage.session.set(
+            newThingy
+          )
+        }
       } else {
         // Completely new site
-        // console.log("not visited")
+
         newThingy[tabURL] = 
         {
           visits: 1,
-          lastVisit: tabLastAccess
+          lastVisit: today
         }
-      }
 
-      // Update storage
-      await chrome.storage.session.set(
-        newThingy
-      )
+        // Update storage
+        await chrome.storage.session.set(
+          newThingy
+        )
+      }
     }
   )
 
