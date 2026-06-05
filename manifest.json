@@ -1,0 +1,17 @@
+{
+    "name": "Streak Anywhere",
+    "description": "uhhhh... i dunno",
+    "version": "1.0",
+    "manifest_version": 3,
+
+    "action": {
+        "default_popup": "hello.html",
+        "default_icon": "images/de bug.png"
+    },
+
+    "permissions": ["storage", "tabs", "activeTab"],
+
+    "background": {
+        "service_worker": "scripts/service-worker.js"
+    }
+}
