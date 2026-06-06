@@ -1,5 +1,3 @@
-console.log("Testing, testing, 1 2 3")
-
 function animatePopIn(element){
     const SECOND_IN_FRAMES = 200
     let animationFrame = 0

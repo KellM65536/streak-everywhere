@@ -1,4 +1,4 @@
-const DAY_IN_MS = 1000 * 1 // 24 * 60 * 60 * 1000
+const DAY_IN_MS = 24 * 60 * 60 * 1000
 
 // Send page visit counts to content script on request
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -26,10 +26,21 @@ async function updateStreaks(tabId, changeInfo, tab){
         
         if(today - value[tabURL].lastVisit >= 1) {
           // It's been a day since last visit
-                  
-          newThingy[tabURL] = {
-            visits: value[tabURL].visits + 1,
-            lastVisit: today
+          
+          if(today - value[tabURL].lastVisit >= 2){
+            // Been 2 or more days, end streak
+            newThingy[tabURL] = {
+              visits: 1,
+              lastVisit: today
+            }
+
+          } else {
+            // Less than 2 days, streak is find
+
+            newThingy[tabURL] = {
+              visits: value[tabURL].visits + 1,
+              lastVisit: today
+            }
           }
 
           // Update storage
