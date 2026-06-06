@@ -1,25 +1,46 @@
 console.log("Testing, testing, 1 2 3")
 
+function animatePopIn(element){
+    const SECOND_IN_FRAMES = 200
+    let animationFrame = 0
+    let id = null
+    let y = -10.0
+    let yVel = 6.0
 
+    clearInterval(id);
+    id = setInterval(stepPopIn, 5);
 
-// Request page visit counts from service worker
-chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
-    const hostname = window.location.hostname
-    const numVisits = response.data[hostname].visits
+    function stepPopIn(){
+        if(animationFrame < SECOND_IN_FRAMES * 0.3){
+            y += yVel
+            yVel *= 0.5
+            element.style.top = y + "rem"
+        } else if (animationFrame < SECOND_IN_FRAMES * 3.3) {
+            yVel = -6.0
+        } else if (animationFrame < SECOND_IN_FRAMES * 3.6) {
+            y += yVel
+            yVel *= 0.5
+            element.style.top = y + "rem"
+        } else {
+            clearInterval(id)
+        }
 
-    console.log(hostname)
-    console.log(numVisits)
+        animationFrame += 1
+    }
+}
 
-    // Create elements for popup
+function createStreakPopup(hostname, numVisits) {
     const popupDiv = document.createElement("div")
     popupDiv.style.width = "20rem" 
     popupDiv.style.height = "7rem"
     popupDiv.style.backgroundColor = "white"
     popupDiv.style.color = "black"
     popupDiv.style.position = "fixed"
-    popupDiv.style.top =  "20px"
-    popupDiv.style.left =  "20px"
-    popupDiv.style.padding = "0.1rem"
+    popupDiv.style.left =  "1rem"
+    popupDiv.style.padding = "1rem"
+    popupDiv.style.borderRadius = "1.5rem"
+    popupDiv.style.borderWidth = "1rem"
+    popupDiv.style.borderColor = "#666666"
 
     const mainNumberDiv = document.createElement("div")
     mainNumberDiv.style.display = "flex"
@@ -30,7 +51,6 @@ chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
 
     const bigNumber = document.createElement("h1")
     bigNumber.textContent = numVisits
-    // bigNumber.style.textAlign = "right"
     bigNumber.style.marginTop = "auto"
     bigNumber.style.fontSize = "3.5rem"
     bigNumber.style.marginRight = "0.5rem"
@@ -56,20 +76,7 @@ chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
     weekProgress.style.bottom = "50%"
     weekProgress.style.accentColor = "red"
     weekProgress.style.display = "inline-block"
-    // weekProgress.style.setProperty('--meter-color', "red");
-
     popupDiv.appendChild(weekProgress)
-
-    // const weekNumber = document.createElement("h2")
-    // const imageUrl = chrome.runtime.getURL("images/full_fire_streak.png")
-    // weekNumber.textContent = "0"
-    // weekNumber.style.fontSize = "2rem"
-    // weekNumber.style.backgroundImage = "url('" + imageUrl + "')"
-    // weekNumber.style.backgroundPosition = "center"
-    // weekNumber.style.width = "30%"
-    // weekNumber.style.display = "inline-block"
-    // // bigNumber.style.marginRight = "0.5rem"
-    // popupDiv.appendChild(weekNumber)
 
     const imageDiv = document.createElement("div")
     imageDiv.style.display = "inline-block"
@@ -81,13 +88,9 @@ chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
 
     const streakImage = document.createElement("img")
     const imageUrl = chrome.runtime.getURL("images/full_fire_streak.png")
-    // streakImage.src = chrome.runtime.getURL("images/full fire streak.png")
     streakImage.src = imageUrl
     streakImage.alt = "Image of fire";
-    // streakImage.style.width = "25%"
     streakImage.style.width = "100%"
-    // streakImage.style.position = "relative"
-    // streakImage.style.bottom = "50%"
 
     imageDiv.appendChild(streakImage)
 
@@ -102,26 +105,23 @@ chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
     const weekNumber = document.createElement("h2")
     weekNumber.textContent = "0"
     weekNumber.style.fontSize = "2rem"
-    // weekNumber.style.width = "30%"
-    // weekNumber.style.display = "inline-block"
-    // bigNumber.style.marginRight = "0.5rem"
-
     weekNumberDiv.appendChild(weekNumber)
-    
-    
-
-    // popupDiv.appendChild(bigNumber)
-    // popupDiv.appendChild(visitsTextLabel)
-
-    // popupDiv.innerHTML = "<p> hello this guy got " + numVisits + " visits</p>"
 
     // Adds the popup
     const mainBody = document.body
     mainBody.appendChild(popupDiv);
+
+    animatePopIn(popupDiv)
+}
+
+// Request page visit counts from service worker
+chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
+    const hostname = window.location.hostname
+    const numVisits = response.data[hostname].visits
+
+    console.log(hostname)
+    console.log(numVisits)
+
+    // Create elements for popup
+    createStreakPopup(hostname, numVisits)
 })
-
-
-
-// Adds the popup
-// const mainBody = document.body
-// mainBody.appendChild(popupDiv);
