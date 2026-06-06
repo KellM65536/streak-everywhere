@@ -17,7 +17,7 @@ async function updateStreaks(tabId, changeInfo, tab){
   const tabURL = new URL(tab.url).hostname
   const tabLastAccess = tab.lastAccessed
 
-  chrome.storage.session.get(tabURL).then((value) => {
+  chrome.storage.session.get(tabURL).then(async (value) => {
       newThingy = {}
       const today = Math.round(Date.now() / DAY_IN_MS)
 
