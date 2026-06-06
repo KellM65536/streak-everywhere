@@ -1,7 +1,3 @@
-// Not synced with DAY_IN_MS in server-worker...
-const DAY_IN_MS = 1000 * 3//24 * 60 * 60 * 1000
-const today = Math.round(Date.now() / DAY_IN_MS)
-
 function animatePopIn(element){
     const SECOND_IN_FRAMES = 200
     let animationFrame = 0
@@ -141,14 +137,11 @@ function createStreakPopup(hostname, numVisits) {
 
 // Request page visit counts from service worker
 chrome.runtime.sendMessage({action: "GET_DATA", hostname: window.location.hostname}, (response) => {
-    console.log(response.data)
+    // console.log(response.data)
     
     if(window.location.hostname in response.data){
         const hostname = window.location.hostname
         const numVisits = response.data[hostname].visits
-
-        console.log(hostname)
-        console.log(numVisits)
 
         createStreakPopup(hostname, numVisits)
     }

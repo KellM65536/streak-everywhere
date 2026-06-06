@@ -1,14 +1,9 @@
-const DAY_IN_MS = 1000 * 3//24 * 60 * 60 * 1000
+const DAY_IN_MS = 60 * 60 * 1000 // 24 * 60 * 60 * 1000
 
 // Send page visit counts to content script on request
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if(message.action == "GET_DATA"){
-    console.log("Recieved signal")
-    
-    // START BLOCK
-
+  if(message.action == "GET_DATA"){    
     const tabURL = message.hostname
-    // const tabLastAccess = tab.lastAccessed
 
     chrome.storage.session.get(tabURL).then(async (value) => {
       const today = Math.round(Date.now() / DAY_IN_MS)
@@ -41,9 +36,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           await chrome.storage.session.set(
             newThingy
           )
-          
-          // console.log(newThingy)
-          // sendResponse({data: newThingy})
         }
       } else {
         // Completely new site
@@ -58,24 +50,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         await chrome.storage.session.set(
           newThingy
         )
-
-        // console.log(newThingy)
-        // sendResponse({data: newThingy})
-
       }
       
       sendResponse({data: newThingy})
     })
-
-    // Printing for debugging
-    // console.log(await chrome.storage.session.get())
-
-    // END BLOCK
-
-    // chrome.storage.session.get().then((value) => {
-    //     sendResponse({data: value})
-    //   }
-    // )
   }
 
   return true
