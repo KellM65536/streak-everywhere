@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       if(value[tabURL]){
         // Site visited before
-        console.log("visited site")
+        // console.log("visited site")
         if(today - value[tabURL].lastVisit >= 1) {
           // It's been a day since last visit
           
@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
       } else {
         // Completely new site
-        console.log("new site")
+        // console.log("new site")
         newThingy[tabURL] = 
         {
           visits: 1,
