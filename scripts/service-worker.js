@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if(message.action == "GET_DATA"){    
     const tabURL = message.hostname
 
-    chrome.storage.session.get(tabURL).then(async (value) => {
+    chrome.storage.sync.get(tabURL).then(async (value) => {
       const today = Math.round(Date.now() / DAY_IN_MS)
 
       newThingy = {}
@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           }
 
           // Update storage
-          await chrome.storage.session.set(
+          await chrome.storage.sync.set(
             newThingy
           )
         }
@@ -47,7 +47,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
 
         // Update storage and send response
-        await chrome.storage.session.set(
+        await chrome.storage.sync.set(
           newThingy
         )
       }
