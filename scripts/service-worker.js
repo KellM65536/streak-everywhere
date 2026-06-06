@@ -1,4 +1,4 @@
-const DAY_IN_MS = 1000 * 10 // 24 * 60 * 60 * 1000
+const DAY_IN_MS = 1000 * 1 // 24 * 60 * 60 * 1000
 
 // Send page visit counts to content script on request
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
