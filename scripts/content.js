@@ -13,33 +13,26 @@ chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
     // Create elements for popup
     const popupDiv = document.createElement("div")
     popupDiv.style.width = "20rem" 
-    popupDiv.style.height = "5rem"
+    popupDiv.style.height = "7rem"
     popupDiv.style.backgroundColor = "white"
     popupDiv.style.color = "black"
     popupDiv.style.position = "fixed"
     popupDiv.style.top =  "20px"
     popupDiv.style.left =  "20px"
-    // popupDiv.style.overflow = "scroll"
+    popupDiv.style.padding = "0.1rem"
 
     const mainNumberDiv = document.createElement("div")
-    // mainNumberDiv.style.gridTemplateColumns = "repeat(4, 1fr)"
-    // mainNumberDiv.style.gridTemplateRows = "repeat(2, 1fr)"
     mainNumberDiv.style.display = "flex"
+    mainNumberDiv.style.height = "75%"
+    mainNumberDiv.style.width = "80%"
 
     popupDiv.appendChild(mainNumberDiv)
 
     const bigNumber = document.createElement("h1")
     bigNumber.textContent = numVisits
-    // bigNumber.style.gridRow = "span 3 / span 3"
     bigNumber.style.textAlign = "right"
-    // bigNumber.style.display = "block"
-    // bigNumber.style.alignSelf = "end"
-    // bigNumber.style.verticalAlign = "bottom"
-    // bigNumber.style.display = "inline"
-    // bigNumber.style.width = "100%"
     bigNumber.style.marginTop = "auto"
-    // bigNumber.style.flexShrink = "2"
-    bigNumber.style.fontSize = "5rem"
+    bigNumber.style.fontSize = "3.5rem"
 
     const middleLabelDiv = document.createElement("div")
     middleLabelDiv.style.display = "flex"
@@ -47,23 +40,34 @@ chrome.runtime.sendMessage({action: "GET_DATA"}, (response) => {
 
     const domainText = document.createElement("p")
     domainText.textContent = hostname
-    // domainText.style.gridColumn = "span 3 / span 3"
-    // domainText.style.gridColumnStart = "2"
-    // domainText.style.gridRowStart = "2"
-    // domainText.style.display = "block"
-    // domainText.style.display = "inline"
 
     const visitsTextLabel = document.createElement("p")
     visitsTextLabel.textContent = "visits"
-    // visitsTextLabel.style.gridColumn = "span 3 / span 3"
-    // visitsTextLabel.style.gridColumnStart = "2"
-    // visitsTextLabel.style.gridRowStart = "1"
-    // visitsTextLabel.style.display = "block"
-    // visitsTextLabel.style.display = "inline"
-    // visitsTextLabel.style.position = "relative"
 
     middleLabelDiv.append(domainText, visitsTextLabel)
     mainNumberDiv.append(bigNumber, middleLabelDiv)
+
+    const weekMeter = document.createElement("meter")
+    weekMeter.max = 7
+    weekMeter.value = numVisits % 8
+    weekMeter.style.width = "70%"
+    weekMeter.style.position = "relative"
+    weekMeter.style.bottom = "50%"
+
+    popupDiv.appendChild(weekMeter)
+
+    const streakImage = document.createElement("img")
+    const imageUrl = chrome.runtime.getURL("images/full_fire_streak.png")
+    // streakImage.src = chrome.runtime.getURL("images/full fire streak.png")
+    streakImage.src = imageUrl
+    streakImage.alt = "Image of fire";
+    streakImage.style.width = "25%"
+    streakImage.style.position = "relative"
+    streakImage.style.bottom = "50%"
+
+    popupDiv.appendChild(streakImage)
+    
+    
 
     // popupDiv.appendChild(bigNumber)
     // popupDiv.appendChild(visitsTextLabel)

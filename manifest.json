@@ -23,5 +23,19 @@
             "http://*/*"
             ]
         }
-    ]
+    ],
+
+    "web_accessible_resources": [
+    {
+      "resources": [
+        "images/full_fire_streak.png",
+        "images/dim_fire_streak.png",
+        "images/no_fire_streak.png"
+        ],
+      "matches": [
+        "http://*/*", 
+        "https://*/*"
+        ]
+    }
+  ]
 }
