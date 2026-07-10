@@ -54,6 +54,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       
       sendResponse({data: newThingy})
     })
+  } else if (message.action == "GET_DATABASE") {
+    chrome.storage.sync.get().then(async (value) => {
+      sendResponse({data: value})
+    })
   }
 
   return true
