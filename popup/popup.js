@@ -1,8 +1,12 @@
 let streakTableBody = document.getElementById("streak-table")
 
+function entryMore(a, b) {
+    return b[1].visits - a[1].visits
+}
+
 // Request all page visit counts from service worker
 chrome.runtime.sendMessage({action: "GET_DATABASE"}, (response) => {
-    for (const [key, value] of Object.entries(response.data)){
+    for (const [key, value] of Object.entries(response.data).sort(entryMore).slice(0, 10)){
         // Create and add table rows
         const newRow = document.createElement("tr")
         const newURL = document.createElement("td")
