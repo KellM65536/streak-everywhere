@@ -15,9 +15,12 @@ function entryMore(a, b) {
 }
 
 function displayResponseAsTable(numRows){
+    let count = 1
     for (const [key, value] of Object.entries(responseData).sort(entryMore).slice(0, numRows)){
         // Create and add table rows
         const newRow = document.createElement("tr")
+        newRow.className = count % 2 == 0 ? "even-table-row" : "odd-table-row"
+
         const newURL = document.createElement("td")
         newURL.textContent = key
         const newVisists = document.createElement("td")
@@ -26,6 +29,8 @@ function displayResponseAsTable(numRows){
         newRow.appendChild(newURL)
         newRow.appendChild(newVisists)
         streakTableBody.appendChild(newRow)
+
+        count += 1
     }
 }
 
