@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     })
   } else if (message.action == "GET_DATABASE") {
     chrome.storage.sync.get().then(async (value) => {
-      updateDatabase(today)
+      checkForEndedStreaks(today)
       sendResponse({data: value})
     })
   }
@@ -63,29 +63,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return true
 })
 
-async function updateDatabase(today){
+// TODO test me
+async function checkForEndedStreaks(today){
   chrome.storage.sync.get().then(async (value) => {
-    // console.log(value)
+    let newThingies = {}
+
     for([key, item] of Object.entries(value)){
-      checkIfStreakOver(key, item, today, false)
-    }
-  })
-}
+      if(item.visits > 0 && today - item.lastVisit >= 2){
+        newThingies[key] = {
+          visits: 0,
+          lastVisit: item.lastVisit,
+        }
+      }
+    } // end for loop
 
-// Problem; can exceed the MAX_WRITE_OPERATIONS_PER_MINUTE quota under certain conditions
-async function checkIfStreakOver(entryURL, entryValue, today, currentlyVisiting){
-  if(entryValue.visits > 0 && today - entryValue.lastVisit >= 2){
-    // Been 2 or more days, end streak
-    let newThingy = {}
-
-    newThingy[entryURL] = {
-      visits: 0,
-      lastVisit: entryValue.lastVisit,
-    }
-
-    // Update storage
     await chrome.storage.sync.set(
-      newThingy
+      newThingies
     )
-  }  
+  })
 }
