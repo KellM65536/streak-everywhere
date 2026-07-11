@@ -1,6 +1,7 @@
 const DEFAULT_NUM_ROWS = 10
 let streakTableBody = document.getElementById("streak-table")
 let showAllButton = document.getElementById("show-all-button")
+let urlSearchBar = document.getElementById("url-search")
 let allShown = false
 let responseData
 
@@ -34,11 +35,23 @@ showAllButton.addEventListener("click", () => {
 
     if(allShown){
         displayResponseAsTable(DEFAULT_NUM_ROWS)
-        showAllButton.textContent = "Show All"
+        showAllButton.textContent = "Load All"
         allShown = false
     } else {
         displayResponseAsTable()
-        showAllButton.textContent = "Show Less"
+        showAllButton.textContent = "Load Less"
         allShown = true
+    }
+})
+
+// Search bar functionality
+urlSearchBar.addEventListener("keyup", () => {
+    let query = urlSearchBar.value.toLowerCase()
+
+    for(row of streakTableBody.getElementsByTagName("tr")){
+        let urlName = row.getElementsByTagName("td")[0].textContent.toLowerCase()
+        console.log(urlName)
+
+        row.style.display = urlName.includes(query) ? "" : "none"
     }
 })
