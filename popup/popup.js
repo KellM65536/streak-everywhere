@@ -6,6 +6,7 @@ let urlSearchBar = document.getElementById("url-search")
 let deleteConfirmationLightBox = document.getElementById("delete-confirmation-lightbox")
 let deconfirmDeletionButton = document.getElementById("close-delete-confirmation-button")
 let confirmDeletionButton = document.getElementById("confirm-deletion-button")
+let deletionConfirmationText = document.getElementById("deletion-confirmation-text")
 let allShown = false
 let responseData
 
@@ -28,11 +29,13 @@ function displayResponseAsTable(numRows){
     }
 }
 
-// Request all page visit counts from service worker
-chrome.runtime.sendMessage({action: "GET_DATABASE"}, (response) => {
-    responseData = response.data
-    displayResponseAsTable(DEFAULT_NUM_ROWS)
-})
+// Request all page visit counts from service worker and update the table
+function getDataAndUpdateTable(){
+    chrome.runtime.sendMessage({action: "GET_DATABASE"}, (response) => {
+        responseData = response.data
+        displayResponseAsTable(DEFAULT_NUM_ROWS)
+    })
+}
 
 showAllButton.addEventListener("click", () => {
     streakTableBody.replaceChildren()
@@ -57,8 +60,13 @@ deconfirmDeletionButton.addEventListener("click", () => {
 })
 
 confirmDeletionButton.addEventListener("click", () => {
-    deleteConfirmationLightBox.style.display = "none"
-    console.log("I'm gonna delete everything!")
+    deletionConfirmationText.textContent = "Clearing all streaks..."
+    chrome.runtime.sendMessage({action: "CLEAR_ALL"}, (response) => {
+        streakTableBody.replaceChildren()
+        getDataAndUpdateTable()
+        deleteConfirmationLightBox.style.display = "none"
+        deletionConfirmationText.textContent = "Are you sure you want to clear all history?"
+    })
 })
 
 // Search bar functionality
@@ -72,3 +80,5 @@ urlSearchBar.addEventListener("keyup", () => {
         row.style.display = urlName.includes(query) ? "" : "none"
     }
 })
+
+getDataAndUpdateTable()

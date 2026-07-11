@@ -58,6 +58,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       checkForEndedStreaks(today)
       sendResponse({data: value})
     })
+  } else if (message.action == "CLEAR_ALL") {
+    chrome.storage.sync.clear().then(async (value) => {
+      sendResponse({data: true})
+    })
   }
 
   return true
