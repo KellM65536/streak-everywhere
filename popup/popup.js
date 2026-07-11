@@ -1,7 +1,11 @@
 const DEFAULT_NUM_ROWS = 10
 let streakTableBody = document.getElementById("streak-table")
 let showAllButton = document.getElementById("show-all-button")
+let clearAllButton = document.getElementById("clear-all-button")
 let urlSearchBar = document.getElementById("url-search")
+let deleteConfirmationLightBox = document.getElementById("delete-confirmation-lightbox")
+let deconfirmDeletionButton = document.getElementById("close-delete-confirmation-button")
+let confirmDeletionButton = document.getElementById("confirm-deletion-button")
 let allShown = false
 let responseData
 
@@ -42,6 +46,19 @@ showAllButton.addEventListener("click", () => {
         showAllButton.textContent = "Load Less"
         allShown = true
     }
+})
+
+clearAllButton.addEventListener("click", () => {
+    deleteConfirmationLightBox.style.display = "flex"
+})
+
+deconfirmDeletionButton.addEventListener("click", () => {
+    deleteConfirmationLightBox.style.display = "none"
+})
+
+confirmDeletionButton.addEventListener("click", () => {
+    deleteConfirmationLightBox.style.display = "none"
+    console.log("I'm gonna delete everything!")
 })
 
 // Search bar functionality
