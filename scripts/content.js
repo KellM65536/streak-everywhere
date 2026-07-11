@@ -35,7 +35,7 @@ function animatePopIn(element){
 
 function createStreakPopup(hostname, numVisits) {
     const popupDiv = document.createElement("div")
-    popupDiv.style.all = "revert"
+    popupDiv.style.all = "initial"
     popupDiv.style.width = "20rem" 
     popupDiv.style.height = "7rem"
     popupDiv.style.backgroundColor = "white"
@@ -49,7 +49,6 @@ function createStreakPopup(hostname, numVisits) {
     popupDiv.style.zIndex = "999999"
 
     const mainNumberDiv = document.createElement("div")
-    mainNumberDiv.style.all = "revert"
     mainNumberDiv.style.display = "flex"
     mainNumberDiv.style.height = "75%"
     mainNumberDiv.style.width = "80%"
@@ -57,30 +56,25 @@ function createStreakPopup(hostname, numVisits) {
     popupDiv.appendChild(mainNumberDiv)
 
     const bigNumber = document.createElement("h1")
-    bigNumber.style.all = "revert"
     bigNumber.textContent = numVisits
     bigNumber.style.marginTop = "auto"
     bigNumber.style.fontSize = "3.5rem"
     bigNumber.style.marginRight = "0.5rem"
 
     const middleLabelDiv = document.createElement("div")
-    middleLabelDiv.style.all = "revert"
     middleLabelDiv.style.display = "flex"
     middleLabelDiv.style.flexDirection = "column"
 
     const domainText = document.createElement("p")
-    domainText.style.all = "revert"
     domainText.textContent = hostname
 
     const visitsTextLabel = document.createElement("p")
-    visitsTextLabel.style.all = "revert"
     visitsTextLabel.textContent = "visits"
 
     middleLabelDiv.append(domainText, visitsTextLabel)
     mainNumberDiv.append(bigNumber, middleLabelDiv)
 
     const weekProgress = document.createElement("progress")
-    weekProgress.style.all = "revert"
     weekProgress.max = 7
     weekProgress.value = numVisits % 7 == 0 ? 7 : numVisits % 7
     weekProgress.style.width = "70%"
@@ -91,7 +85,6 @@ function createStreakPopup(hostname, numVisits) {
     popupDiv.appendChild(weekProgress)
 
     const imageDiv = document.createElement("div")
-    imageDiv.style.all = "revert"
     imageDiv.style.display = "inline-block"
     imageDiv.style.width = "25%"
     imageDiv.style.position = "relative"
@@ -100,7 +93,6 @@ function createStreakPopup(hostname, numVisits) {
     popupDiv.appendChild(imageDiv)
 
     const streakImage = document.createElement("img")
-    streakImage.style.all = "revert"
 
     // Change image based on week streak
     const imageUrl = numVisits % 7 == 0 ? chrome.runtime.getURL("images/full_fire_streak.png"):
@@ -114,7 +106,6 @@ function createStreakPopup(hostname, numVisits) {
     imageDiv.appendChild(streakImage)
 
     const weekNumberDiv = document.createElement("div")
-    weekNumberDiv.style.all = "revert"
     weekNumberDiv.style.position = "absolute"
     weekNumberDiv.style.top = "50%"
     weekNumberDiv.style.left = "50%"
@@ -123,7 +114,6 @@ function createStreakPopup(hostname, numVisits) {
     imageDiv.appendChild(weekNumberDiv)
 
     const weekNumber = document.createElement("h2")
-    weekNumber.style.all = "revert"
     weekNumber.textContent = Math.floor(numVisits / 7)
     weekNumber.style.fontSize = "2rem"
     weekNumberDiv.appendChild(weekNumber)
