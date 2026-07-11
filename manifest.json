@@ -6,7 +6,7 @@
 
     "action": {
         "default_popup": "popup/popup.html",
-        "default_icon": "images/de bug.png"
+        "default_icon": "images/man_running_pictogram_outlined_128.png"
     },
 
     "permissions": ["storage", "tabs", "activeTab"],
@@ -37,5 +37,11 @@
         "https://*/*"
         ]
     }
-  ]
+  ],
+
+  "icons": {
+    "16": "images/man_running_pictogram_outlined_16.png",
+    "48": "images/man_running_pictogram_outlined_48.png",
+    "128": "images/man_running_pictogram_outlined_128.png"
+  }
 }
