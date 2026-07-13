@@ -18,11 +18,12 @@ function animatePopIn(element){
             y += yVel
             yVel *= 0.5
             element.style.top = y + "rem"
-        } else if (animationFrame < SECOND_IN_FRAMES * 3.3) {
-            yVel = -6.0
-        } else if (animationFrame < SECOND_IN_FRAMES * 3.6) {
+        } else if (animationFrame < SECOND_IN_FRAMES * 8.3) {
+            yVel = 0 // -6.0
+        } else if (animationFrame < SECOND_IN_FRAMES * 8.6) {
             y += yVel
-            yVel *= 0.5
+            yVel += -0.2
+            // yVel *= 0.5
             element.style.top = y + "rem"
         } else {
             clearInterval(id)
