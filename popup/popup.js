@@ -7,6 +7,7 @@ let deleteConfirmationLightBox = document.getElementById("delete-confirmation-li
 let deconfirmDeletionButton = document.getElementById("close-delete-confirmation-button")
 let confirmDeletionButton = document.getElementById("confirm-deletion-button")
 let deletionConfirmationText = document.getElementById("deletion-confirmation-text")
+let mainIcon = document.getElementById("front-icon")
 let allShown = false
 let responseData
 
@@ -87,3 +88,7 @@ urlSearchBar.addEventListener("keyup", () => {
 })
 
 getDataAndUpdateTable()
+
+if(Math.random() > 0.95){
+    mainIcon.src = "/images/man_laying_pictogram.png"
+}
