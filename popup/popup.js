@@ -24,11 +24,17 @@ function displayResponseAsTable(numRows){
 
         const newURL = document.createElement("td")
         newURL.textContent = key
-        const newVisists = document.createElement("td")
-        newVisists.textContent = value.streak
+        const newStreak = document.createElement("td")
+        newStreak.textContent = value.streak
+        const newNumVisits = document.createElement("td")
+        newNumVisits.textContent = value.numVisits
+        const newBestStreak = document.createElement("td")
+        newBestStreak.textContent = value.bestStreak
         
         newRow.appendChild(newURL)
-        newRow.appendChild(newVisists)
+        newRow.appendChild(newStreak)
+        newRow.appendChild(newNumVisits)
+        newRow.appendChild(newBestStreak)
         streakTableBody.appendChild(newRow)
 
         count += 1

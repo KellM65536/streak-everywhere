@@ -21,6 +21,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             newThingy[tabURL] = {
               streak: 1,
               lastVisit: today,
+              numVisits: currentEntryValue.numVisits + 1,
+              bestStreak: currentEntryValue.streak > currentEntryValue.bestStreak ? 
+                currentEntryValue.streak :
+                currentEntryValue.bestStreak
             }
 
           } else {
@@ -29,6 +33,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             newThingy[tabURL] = {
               streak: currentEntryValue.streak + 1,
               lastVisit: today,
+              numVisits: currentEntryValue.numVisits + 1,
+              bestStreak: currentEntryValue.streak > currentEntryValue.bestStreak ? 
+                currentEntryValue.streak :
+                currentEntryValue.bestStreak
             }
           }
 
@@ -43,6 +51,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         {
           streak: 1,
           lastVisit: today,
+          numVisits: 1,
+          bestStreak: 1
         }
 
         // Update storage and send response
@@ -77,6 +87,8 @@ async function checkForEndedStreaks(today){
         newThingies[key] = {
           streak: 0,
           lastVisit: item.lastVisit,
+          numVisits: item.numVisits,
+          bestStreak: item.bestStreak
         }
       }
     } // end for loop
