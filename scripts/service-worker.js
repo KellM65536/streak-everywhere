@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           if(today - currentEntryValue.lastVisit >= 2){
             // Been 2 or more days, end streak
             newThingy[tabURL] = {
-              visits: 1,
+              streak: 1,
               lastVisit: today,
             }
 
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             // Less than 2 days, streak is fine
 
             newThingy[tabURL] = {
-              visits: currentEntryValue.visits + 1,
+              streak: currentEntryValue.streak + 1,
               lastVisit: today,
             }
           }
@@ -41,7 +41,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // Completely new site
         newThingy[tabURL] = 
         {
-          visits: 1,
+          streak: 1,
           lastVisit: today,
         }
 
@@ -73,9 +73,9 @@ async function checkForEndedStreaks(today){
     let newThingies = {}
 
     for([key, item] of Object.entries(value)){
-      if(item.visits > 0 && today - item.lastVisit >= 2){
+      if(item.streak > 0 && today - item.lastVisit >= 2){
         newThingies[key] = {
-          visits: 0,
+          streak: 0,
           lastVisit: item.lastVisit,
         }
       }

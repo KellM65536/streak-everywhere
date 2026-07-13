@@ -12,7 +12,7 @@ let allShown = false
 let responseData
 
 function entryMore(a, b) {
-    return b[1].visits - a[1].visits
+    return b[1].streak - a[1].streak
 }
 
 function displayResponseAsTable(numRows){
@@ -25,7 +25,7 @@ function displayResponseAsTable(numRows){
         const newURL = document.createElement("td")
         newURL.textContent = key
         const newVisists = document.createElement("td")
-        newVisists.textContent = value.visits
+        newVisists.textContent = value.streak
         
         newRow.appendChild(newURL)
         newRow.appendChild(newVisists)
@@ -40,6 +40,7 @@ function getDataAndUpdateTable(){
     chrome.runtime.sendMessage({action: "GET_DATABASE"}, (response) => {
         responseData = response.data
         displayResponseAsTable(DEFAULT_NUM_ROWS)
+        console.log(response.data)
     })
 }
 

@@ -34,7 +34,7 @@ function animatePopIn(element){
     }
 }
 
-function createStreakPopup(hostname, numVisits) {
+function createStreakPopup(hostname, streakAmount) {
     const popupDiv = document.createElement("div")
     popupDiv.style.all = "initial"
     popupDiv.style.width = "20rem" 
@@ -57,7 +57,7 @@ function createStreakPopup(hostname, numVisits) {
     popupDiv.appendChild(mainNumberDiv)
 
     const bigNumber = document.createElement("h1")
-    bigNumber.textContent = numVisits
+    bigNumber.textContent = streakAmount
     bigNumber.style.marginTop = "auto"
     bigNumber.style.fontSize = "3.5rem"
     bigNumber.style.marginRight = "0.5rem"
@@ -69,15 +69,15 @@ function createStreakPopup(hostname, numVisits) {
     const domainText = document.createElement("p")
     domainText.textContent = hostname
 
-    const visitsTextLabel = document.createElement("p")
-    visitsTextLabel.textContent = "visits"
+    const streakTextLabel = document.createElement("p")
+    streakTextLabel.textContent = "streak"
 
-    middleLabelDiv.append(domainText, visitsTextLabel)
+    middleLabelDiv.append(domainText, streakTextLabel)
     mainNumberDiv.append(bigNumber, middleLabelDiv)
 
     const weekProgress = document.createElement("progress")
     weekProgress.max = 7
-    weekProgress.value = numVisits % 7 == 0 ? 7 : numVisits % 7
+    weekProgress.value = streakAmount % 7 == 0 ? 7 : streakAmount % 7
     weekProgress.style.width = "70%"
     weekProgress.style.position = "relative"
     weekProgress.style.bottom = "50%"
@@ -96,8 +96,8 @@ function createStreakPopup(hostname, numVisits) {
     const streakImage = document.createElement("img")
 
     // Change image based on week streak
-    const imageUrl = numVisits % 7 == 0 ? chrome.runtime.getURL("images/full_fire_streak.png"):
-        numVisits > 6 ? chrome.runtime.getURL("images/dim_fire_streak.png"):
+    const imageUrl = streakAmount % 7 == 0 ? chrome.runtime.getURL("images/full_fire_streak.png"):
+        streakAmount > 6 ? chrome.runtime.getURL("images/dim_fire_streak.png"):
         chrome.runtime.getURL("images/no_fire_streak.png")
 
     streakImage.src = imageUrl
@@ -115,7 +115,7 @@ function createStreakPopup(hostname, numVisits) {
     imageDiv.appendChild(weekNumberDiv)
 
     const weekNumber = document.createElement("h2")
-    weekNumber.textContent = Math.floor(numVisits / 7)
+    weekNumber.textContent = Math.floor(streakAmount / 7)
     weekNumber.style.fontSize = "2rem"
     weekNumberDiv.appendChild(weekNumber)
 
@@ -132,8 +132,8 @@ chrome.runtime.sendMessage({action: "GET_DATA", hostname: window.location.hostna
     
     if(window.location.hostname in response.data){
         const hostname = window.location.hostname
-        const numVisits = response.data[hostname].visits
+        const streakAmount = response.data[hostname].streak
 
-        createStreakPopup(hostname, numVisits)
+        createStreakPopup(hostname, streakAmount)
     }
 })
