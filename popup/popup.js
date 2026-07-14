@@ -50,10 +50,9 @@ function getDataAndUpdateTable(){
     })
 }
 
-showAllButton.addEventListener("click", () => {
+function toggleLoadTable(toggleValue){
     streakTableBody.replaceChildren()
-
-    if(allShown){
+    if(!toggleValue){
         displayResponseAsTable(DEFAULT_NUM_ROWS)
         showAllButton.textContent = "Load All"
         allShown = false
@@ -62,6 +61,21 @@ showAllButton.addEventListener("click", () => {
         showAllButton.textContent = "Load Less"
         allShown = true
     }
+}
+
+showAllButton.addEventListener("click", () => {
+    toggleLoadTable(!allShown)
+    // streakTableBody.replaceChildren()
+
+    // if(allShown){
+    //     displayResponseAsTable(DEFAULT_NUM_ROWS)
+    //     showAllButton.textContent = "Load All"
+    //     allShown = false
+    // } else {
+    //     displayResponseAsTable()
+    //     showAllButton.textContent = "Load Less"
+    //     allShown = true
+    // }
 })
 
 clearAllButton.addEventListener("click", () => {
@@ -85,6 +99,10 @@ confirmDeletionButton.addEventListener("click", () => {
 // Search bar functionality
 urlSearchBar.addEventListener("keyup", () => {
     let query = urlSearchBar.value.toLowerCase()
+
+    if(!allShown){
+        toggleLoadTable(true)
+    }
 
     for(row of streakTableBody.getElementsByTagName("tr")){
         let urlName = row.getElementsByTagName("td")[0].textContent.toLowerCase()

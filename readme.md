@@ -10,7 +10,7 @@ This is a Chrome extension that tracks how many days you've visited website doma
 
 You can click the extension in your pinned extensions bar to see all your streaks, how many times you've visited pages, and what your highest streak has been for a specific page. The info is automatically sorted by highest current streak.  
 
-Press load more to view all websites urls ever visited. The search bar will only filter through currently loaded website urls.
+Press load more to view all websites urls ever visited. Use the search bar to find a specific website url and it's associated data.
 
 ## Installation
 
