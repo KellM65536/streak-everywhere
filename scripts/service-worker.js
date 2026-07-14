@@ -34,8 +34,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
               streak: currentEntryValue.streak + 1,
               lastVisit: today,
               numVisits: currentEntryValue.numVisits + 1,
-              bestStreak: currentEntryValue.streak > currentEntryValue.bestStreak ? 
-                currentEntryValue.streak :
+              bestStreak: currentEntryValue.streak + 1 > currentEntryValue.bestStreak ? 
+                currentEntryValue.streak + 1 :
                 currentEntryValue.bestStreak
             }
           }
