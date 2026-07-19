@@ -9,7 +9,7 @@
         "default_icon": "images/man_running_pictogram_outlined_128.png"
     },
 
-    "permissions": ["storage", "tabs", "activeTab"],
+    "permissions": ["storage", "activeTab"],
 
     "background": {
         "service_worker": "scripts/service-worker.js"
