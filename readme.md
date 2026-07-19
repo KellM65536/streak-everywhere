@@ -14,4 +14,15 @@ Press load more to view all websites urls ever visited. Use the search bar to fi
 
 ## Installation
 
-I will get back to you on that...
+### For Google Chrome:
+
+1. Download all the code as a zip. 
+2. Extract everything into your folder of choice.
+3. Go to your extension settings (`chrome://extensions/`).
+4. Turn on developer mode (top right corner).
+5. Click load unpacked, and select the folder that you extracted the zip into.
+6. Start streaking.
+
+### For Others:
+
+I dont know :(
