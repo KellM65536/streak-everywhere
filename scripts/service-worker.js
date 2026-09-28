@@ -66,6 +66,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message.action == "GET_DATABASE") {
     chrome.storage.sync.get().then(async (value) => {
       checkForEndedStreaks(today)
+      thePurge(today)
       sendResponse({data: value})
     })
   } else if (message.action == "CLEAR_ALL") {
@@ -75,9 +76,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   return true
-})
+}) // addListener()
 
-// TODO test me
+/**
+ * End all streaks that should end
+ */
 async function checkForEndedStreaks(today){
   chrome.storage.sync.get().then(async (value) => {
     let newThingies = {}
@@ -97,4 +100,23 @@ async function checkForEndedStreaks(today){
       newThingies
     )
   })
-}
+} // function checkForEndedStreaks()
+
+/**
+ * Get rid of sites that are taking up unecessary storage
+ */
+async function thePurge(today){
+  chrome.storage.sync.get().then(async (value) => {
+    let markedForDeath = []
+    let valueEntries = Object.entries(value)
+
+    for([key, item] of valueEntries){
+      if(item.numVisits < 2 && today - item.lastVisit >= 2 && valueEntries.length > 50){
+        markedForDeath.push(key)
+      }
+    } // end for loop
+
+    chrome.storage.sync.remove(markedForDeath)
+    // console.log(markedForDeath)
+  }) // get()
+} // function thePurge()
