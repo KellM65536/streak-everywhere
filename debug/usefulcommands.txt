@@ -1,1 +1,0 @@
-chrome.storage.sync.set({"www.google.com": {lastVisit: 20646, streak: 6}})
